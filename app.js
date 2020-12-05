@@ -6,8 +6,14 @@ const uri = 'mongodb://localhost:27017/newDB'
 const bodyPaser = require('body-parser');
 
 //routes
-const about = require('./Routes/About')
-const test = require('./Routes/Test')
+const aboutRoute = require('./Routes/About')
+const testRoute = require('./Routes/Test')
+const getitemRoute = require('./Routes/GetItem')
+const uploadRoute = require('./Routes/Upload')
+const deleteRoute = require('./Routes/Delete')
+const newItemRoute = require('./Routes/NewItem')
+const updateRoute = require('./Routes/Update')
+
 
 
 //modelo
@@ -31,9 +37,15 @@ mongoose.connection.on('error', err =>{
     console.log(err)
 })
 
-app.get('/about', about)
+app.get('/about', aboutRoute);
+app.get('/test', testRoute);
+app.get('/get/:id', getitemRoute);
+app.get('/upload', uploadRoute);
+app.get('/delete/:id', deleteRoute);
 
-app.get('/test', test)
+app.post('/new', newItemRoute);
+app.post('/update', updateRoute);
+
 
 
 app.listen(process.env.PORT || 3000, () => { 
