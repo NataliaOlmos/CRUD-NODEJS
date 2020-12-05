@@ -25,6 +25,8 @@ app.use(bodyPaser.urlencoded({extended: false}));
 app.use(bodyPaser.json())
 app.use(express.static(__dirname + '/public'));
 
+//template engine
+app.set('view engine', 'pug')
 
 
 mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true});
