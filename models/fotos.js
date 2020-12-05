@@ -1,10 +1,15 @@
-// const Schema = mongoose.Schema;
-// const ObjectId = Schema.ObjectId;
+const mongoose = require ('mongoose')
+const Schema = mongoose.Schema;
+const ObjectId = Schema.ObjectId;
 
-// const BlogPost = new Schema ({
-//     id: ObjectId,
-//     title: String,
-//     body: String,
-//     date: Date,
-//     url: String
-// });
+const FotoSchema = new Schema ({
+    id: ObjectId,
+    title: String,
+    description: String,
+    date: Date,
+    url: String
+});
+
+const Foto = mongoose.model('Fotos', FotoSchema);
+module.exports = Foto;
+
