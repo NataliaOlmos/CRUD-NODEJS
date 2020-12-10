@@ -1,0 +1,9 @@
+html
+  head
+    title= title
+  body
+    form(action="/insert", method='POST')
+        input(type="file", name="filename")
+        input(type="text")
+        input(type="text")
+        input(type="submit", value="Cargar imagen")

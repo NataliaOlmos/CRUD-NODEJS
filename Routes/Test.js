@@ -8,7 +8,7 @@ module.exports = (req, res) => {
     //     date:new Date(),
     //     filename: 'foto.jpg'
     // });
-    // console.log(foto)
+    // console.log(foto) 
 
     // foto.save();
 
