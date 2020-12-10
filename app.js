@@ -5,7 +5,17 @@ require('dotenv').config()
 const uri = 'mongodb://localhost:27017/newDB'
 const bodyPaser = require('body-parser');
 const multer = require('multer')
-const upload = multer({ dest: 'public/uploads/' })
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './public/uploads')
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now() + '.jpg')
+    }
+  })
+   
+const upload = multer({ storage: storage })
+
 
 
 //routes
