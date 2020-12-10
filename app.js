@@ -4,6 +4,9 @@ const mongoose = require ('mongoose')
 require('dotenv').config()
 const uri = 'mongodb://localhost:27017/newDB'
 const bodyPaser = require('body-parser');
+const multer = require('multer')
+const upload = multer({ dest: 'public/uploads/' })
+
 
 //routes
 const aboutRoute = require('./Routes/About')
@@ -45,7 +48,21 @@ app.get('/get/:id', getitemRoute);
 app.get('/upload', uploadRoute);
 app.get('/delete/:id', deleteRoute);
 
-app.post('/new', newItemRoute);
+
+app.post('/new',  upload.single("filename"), (req, res) => {
+    console.log(req)
+    const { title, description } = req.body;
+    const foto = new Foto({
+         title: title,
+         description: description,
+         date:new Date(),
+         filename: 'foto.jpg'
+     });
+ 
+     foto.save().then(() => console.log("Nueva foto insertada"));
+     res.send(`New Item`)
+ 
+});
 app.post('/update', updateRoute);
 
 
