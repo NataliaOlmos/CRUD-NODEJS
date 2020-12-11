@@ -4,13 +4,16 @@ const mongoose = require ('mongoose')
 require('dotenv').config()
 const uri = 'mongodb://localhost:27017/newDB'
 const bodyPaser = require('body-parser');
+const { v4: uuidv4 } = require('uuid')
 const multer = require('multer')
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, './public/uploads')
     },
     filename: function (req, file, cb) {
-      cb(null, file.fieldname + '-' + Date.now() + '.jpg')
+      const originalname = file.originalname;
+      const extension = originalname.substring(originalname.lastIndexOf('.'), originalname.length);
+      cb(null, uuidv4() + extension)
     }
   })
    
@@ -26,7 +29,7 @@ const uploadRoute = require('./Routes/Upload')
 const deleteRoute = require('./Routes/Delete')
 const newItemRoute = require('./Routes/NewItem')
 const updateRoute = require('./Routes/Update')
-
+const getAllRoute = require('./Routes/Getall')
 
 
 //modelo
@@ -37,6 +40,7 @@ const Foto = require('./models/fotos');
 app.use(bodyPaser.urlencoded({extended: false}));
 app.use(bodyPaser.json())
 app.use(express.static(__dirname + '/public'));
+app.use('/asset', express.static('public/uploads'));
 
 //template engine
 app.set('view engine', 'pug')
@@ -54,9 +58,12 @@ mongoose.connection.on('error', err =>{
 
 app.get('/about', aboutRoute);
 app.get('/test', testRoute);
+app.get('/getall', getAllRoute);
 app.get('/get/:id', getitemRoute);
 app.get('/upload', uploadRoute);
 app.get('/delete/:id', deleteRoute);
+app.get('/public/uploads', updateRoute)
+
 
 
 app.post('/new',  upload.single("filename"), (req, res) => {
@@ -65,8 +72,9 @@ app.post('/new',  upload.single("filename"), (req, res) => {
     const foto = new Foto({
          title: title,
          description: description,
+         filename: req.file.filename,
          date:new Date(),
-         filename: 'foto.jpg'
+        
      });
  
      foto.save().then(() => console.log("Nueva foto insertada"));

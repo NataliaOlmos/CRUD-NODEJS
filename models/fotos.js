@@ -7,7 +7,8 @@ const FotoSchema = new Schema ({
     title: String,
     description: String,
     date: Date,
-    url: String
+    url: String,
+    filename: String
 });
 
 const Foto = mongoose.model('Fotos', FotoSchema);

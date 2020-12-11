@@ -8,5 +8,20 @@
 <body>
     <h1>Galería de fotos</h1>
     <p>App Node</p>
+    <div id="fotos-container"></div>
+
+    <script>
+     fetch('http://localhost:3000/Getall')
+     .then(res => res.json())
+     .then( json => {
+         for(foto of json){
+             console.log(foto)
+             const html = `<img src="http://localhost:3000/uploads/${foto.filename}"/>`
+
+                  document.querySelector('#fotos-container').innerHTML += html
+                  }
+     })
+
+    </script>
 </body>
 </html>
