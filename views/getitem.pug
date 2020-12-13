@@ -1,0 +1,22 @@
+html
+  head
+    title = title
+  body
+    h1  Obtener elemento
+     form(action="")
+    input(
+        value = item.title
+    )
+    textarea(
+        value=item.description, 
+        cols="30", 
+        rows="10"
+        )=item.description
+   
+    img(
+        src="http://localhost:3000/uploads/" + item.filename
+        width="500"
+    )
+  input(type="submit", value="Actualizar imagen")
+  a(href="/delete/" + item._id) Eliminar imagen
+   

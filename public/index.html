@@ -6,6 +6,18 @@
     <title>Document</title>
 </head>
 <body>
+    <div>
+        <menu>
+            <ul>
+                <li>
+                    <a href="#">Home</a>
+                </li>
+                <li>
+                    <a href="/upload">Subir fotos</a>
+                </li>
+            </ul>
+        </menu>
+    </div>
     <h1>Galería de fotos</h1>
     <p>App Node</p>
     <div id="fotos-container"></div>
@@ -16,7 +28,7 @@
      .then( json => {
          for(foto of json){
              console.log(foto)
-             const html = `<img src="http://localhost:3000/uploads/${foto.filename}"/>`
+             const html = `<a href="/get/${foto._id}"><img width="300px" height="300px" margin="10px" src="http://localhost:3000/uploads/${foto.filename}"/></a>`
 
                   document.querySelector('#fotos-container').innerHTML += html
                   }
