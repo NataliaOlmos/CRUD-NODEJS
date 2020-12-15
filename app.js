@@ -3,7 +3,6 @@ const app = express();
 const mongoose = require ('mongoose')
 require('dotenv').config()
 const uri = 'mongodb://localhost:27017/newDB'
-const bodyPaser = require('body-parser');
 const { v4: uuidv4 } = require('uuid')
 const multer = require('multer')
 const storage = multer.diskStorage({
@@ -37,8 +36,8 @@ const Foto = require('./models/fotos');
 
 
 // //MIDDLEWARE
-app.use(bodyPaser.urlencoded({extended: false}));
-app.use(bodyPaser.json())
+app.use(express.urlencoded({extended: false}));
+app.use(express.json())
 app.use(express.static(__dirname + '/public'));
 app.use('/asset', express.static('public/uploads'));
 
@@ -62,12 +61,12 @@ app.get('/getall', getAllRoute);
 app.get('/get/:id', getitemRoute);
 app.get('/upload', uploadRoute);
 app.get('/delete/:id', deleteRoute);
-app.get('/public/uploads', updateRoute)
+app.post('/update', updateRoute);
 
 
 
-app.post('/new',  upload.single("filename"), (req, res) => {
-    console.log(req)
+app.post('/new',  upload.single("filename"), async (req, res) => {
+    console.log(req.file)
     const { title, description } = req.body;
     const foto = new Foto({
          title: title,
@@ -77,11 +76,11 @@ app.post('/new',  upload.single("filename"), (req, res) => {
         
      });
  
-     foto.save().then(() => console.log("Nueva foto insertada"));
-     res.send(`New Item`)
+     await foto.save();
+     res.redirect('/');
  
 });
-app.post('/update', updateRoute);
+
 
 
 

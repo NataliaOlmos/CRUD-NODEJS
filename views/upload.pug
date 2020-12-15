@@ -1,7 +1,8 @@
 html
     head
         title= title
-    body
+    body        
+    include header.pug
         form(method="POST" action="/new", enctype="multipart/form-data")
             label Selecciona una foto
             input(
