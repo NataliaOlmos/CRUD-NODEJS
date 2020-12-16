@@ -1,8 +1,9 @@
 html
     head
         title= title
+        link(rel='stylesheet', type='text/css', href='/css/styles.css')
     body        
-    include header.pug
+        include header.pug
         form(method="POST" action="/new", enctype="multipart/form-data")
             label Selecciona una foto
             input(
